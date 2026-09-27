@@ -5,6 +5,7 @@
 class QTimer;
 class QPropertyAnimation;
 class SmoothOpacity;
+class QGraphicsOpacityEffect;
 struct SpinnerProgressPrivate;
 
 class SpinnerProgress : public QWidget {
@@ -47,5 +48,5 @@ struct SpinnerProgressPrivate {
 
         QTimer *timer = nullptr;        
         QPropertyAnimation *animation = nullptr;
-        SmoothOpacity *opacity = nullptr;
+        QGraphicsOpacityEffect *opacity = nullptr;
 };

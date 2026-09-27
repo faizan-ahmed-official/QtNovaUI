@@ -1,6 +1,6 @@
 #include "../include/SpinnerProgress.h"
-#include "../SmoothOpacity.h"
 
+#include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QPainter>
@@ -12,7 +12,7 @@ SpinnerProgress::SpinnerProgress(QWidget *parent) : QWidget(parent),
     hide();
                                                         
     // Opacity
-    d->opacity = new SmoothOpacity;
+    d->opacity = new QGraphicsOpacityEffect;
     setGraphicsEffect(d->opacity);
                                                         
     // Anim
