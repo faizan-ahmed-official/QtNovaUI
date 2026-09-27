@@ -16,6 +16,9 @@ class TextField : public QLineEdit {
         void setDarkMode(bool dark);
         bool darkMode() const;
 
+        void setCornerRadius(int radius);
+        int cornerRadius() const;
+    
         void setIconSize(const QSize &size);
         QSize iconSize() const;
 
@@ -53,7 +56,8 @@ struct TextFieldPrivate {
         bool darkMode = false, contextMenuEnabled = true, focused = false, hovered = false, textFieldIcon = false, clearButtonEnabled = false, passwordButtonEnabled = false, passwordVisible = false;
 
         const int spacing = 12;
-
+        int cornerRadius = 6;
+        
         QPixmap lightIcon, darkIcon;
         QSize iconSize = QSize(20, 20);
 
