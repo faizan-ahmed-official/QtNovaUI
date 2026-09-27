@@ -80,8 +80,10 @@ void TextField::adjustTextMargins() {
     int leftMargin = d->spacing;
     int rightMargin = d->spacing;
 
+    const int iconTextSpacing = 8;
+
     if (d->textFieldIcon)
-        leftMargin += iconSize().width() + d->spacing;
+        leftMargin += iconSize().width() + iconTextSpacing;
 
     if (clearButtonEnabled() || passwordButtonEnabled())
         rightMargin += d->actionButtonSize.width() + d->spacing;
@@ -141,10 +143,26 @@ void TextField::setThemeIcon(const QString &light, const QString &dark) {
 
     d->darkIcon = renderSVGIcon(dark, iconSize());
     d->lightIcon = renderSVGIcon(light, iconSize());
-    d->textFieldIcon = !d->textFieldIcon;
+    d->textFieldIcon = true;
 
     update();
     adjustTextMargins();
+}
+
+void TextField::setCornerRadius(int radius) {
+    if (d->cornerRadius == radius)
+        return;
+    
+    d->cornerRadius = radius;
+
+    d->clearButton->setCornerRadius(d->cornerRadius);
+    d->passwordButton->setCornerRadius(d->cornerRadius);
+
+    update();
+}
+
+int TextField::cornerRadius() const {
+    return d->cornerRadius;
 }
 
 void TextField::setClearButtonEnabled(bool enable) {
@@ -328,12 +346,12 @@ void TextField::paintEvent(QPaintEvent *event) {
         brushColor = darkMode() ? QColor("#2D2D2D") : QColor("#FBFBFB");
 
     painter.setBrush(brushColor);
-    painter.drawRoundedRect(rec, 6, 6);
+    painter.drawRoundedRect(rec, cornerRadius(), cornerRadius());
 
     // Draw left icon if present
     if (d->textFieldIcon) {
         int iconX = d->spacing;
-        int iconY = (rec.height() - iconSize().height()) / 2;
+        int iconY = rec.top() + (rec.height() - iconSize().height()) / 2;
         painter.drawPixmap(iconX, iconY, darkMode() ? d->darkIcon : d->lightIcon);
     }
 
